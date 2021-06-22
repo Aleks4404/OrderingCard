@@ -1,3 +1,5 @@
+OrderingCard [![Build status](https://ci.appveyor.com/api/projects/status/d869ph51tq4uhmxm/branch/master?svg=true)](https://ci.appveyor.com/project/Aleks4404/orderingcard/branch/master)
+
 # Домашнее задание к занятию «2.1. Тестирование веб-интерфейсов»
 
 ## Селекторы
