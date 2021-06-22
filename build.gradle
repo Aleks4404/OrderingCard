@@ -5,6 +5,10 @@ plugins {
 group 'ru.netology'
 version '1.0-SNAPSHOT'
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
 repositories {
     mavenCentral()
 }
