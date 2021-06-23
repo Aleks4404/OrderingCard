@@ -26,6 +26,12 @@ public class OrderCard {
         driver = new ChromeDriver();
     }
 
+    @AfterEach
+    public void tearDown() {
+        driver.quit();
+        driver = null;
+    }
+
     @Test
     void shouldSubmitAnApplication() {
         driver.get("http://localhost:9999");
@@ -43,8 +49,8 @@ public class OrderCard {
     void shouldBeFilledInWithNonValidData() {
         driver.get("http://localhost:9999");
         List<WebElement> textFields = driver.findElements(By.className("input__control"));
-        textFields.get (0).sendKeys("Ivanov Ivan");
-        textFields.get (1).sendKeys("+79270123456");
+        textFields.get(0).sendKeys("Ivanov Ivan");
+        textFields.get(1).sendKeys("+79270123456");
         driver.findElement(By.className("checkbox")).click();
         driver.findElement(By.tagName("button")).click();
         String expectedMessage = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
@@ -52,9 +58,26 @@ public class OrderCard {
         assertEquals(expectedMessage, actualMessage);
     }
 
-    @AfterEach
-    public void tearDown() {
-        driver.quit();
-        driver = null;
+    @Test
+    void shouldEnterTheWrongPhoneNumber() {
+        driver.get("http://localhost:9999");
+        List<WebElement> textFields = driver.findElements(By.className("input__control"));
+        textFields.get(0).sendKeys("Иванов Иван");
+        textFields.get(1).sendKeys("8927012345");
+        driver.findElement(By.className("checkbox")).click();
+        driver.findElement(By.tagName("button")).click();
+        String expectedMessage = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
+        String actualMessage = driver.findElement(By.cssSelector("[data-test-id=phone] .input__sub")).getText().trim();
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    void shouldLeaveTheFieldsBlank() {
+        driver.get("http://localhost:9999");
+        driver.findElement(By.className("checkbox")).click();
+        driver.findElement(By.tagName("button")).click();
+        String expectedMessage = "Поле обязательно для заполнения";
+        String actualMessage = driver.findElement(By.cssSelector("[data-test-id=name] .input__sub")).getText().trim();
+        assertEquals(expectedMessage, actualMessage);
     }
 }
