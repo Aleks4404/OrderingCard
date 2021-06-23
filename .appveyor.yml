@@ -13,4 +13,4 @@ install:
   - chmod +x gradlew
 
 build_script:
-  - ./gradlew test -Dselenium.headless=true
+  - ./gradlew test --info
