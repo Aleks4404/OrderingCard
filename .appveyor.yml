@@ -13,6 +13,4 @@ install:
   - chmod +x gradlew
 
 build_script:
-  - cargo build --verbose
-    # Запускаем тесты
-    - cargo test --verbose
+  - ./gradlew test --info
